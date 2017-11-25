@@ -149,7 +149,7 @@ public class MulticastGUIServer extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         String msg = messageBox.getText();
         messageBox.setText("");
-        serv.sendMessage(msg);
+        serv.sendMessage("Server > "+msg +"\n");
         this.log.append("Server > " + msg +"\n");
     }//GEN-LAST:event_jButton1ActionPerformed
 

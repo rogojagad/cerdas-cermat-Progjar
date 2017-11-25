@@ -27,7 +27,8 @@ public class MulticastServer {
     private static byte[] buf;
     private static final List<Client> listClient = new ArrayList<Client>(100);
     public List<Soal> listQuestion = new ArrayList<Soal>(100);
-        
+    public static int jawabFlag = 0;
+    
     public static void main(String args[]){
         
         try {
@@ -70,17 +71,55 @@ public class MulticastServer {
             }
             
             if(msg.startsWith("*ANS")){
-                String[] tmp;
+                if(jawabFlag == 0){
+                    String[] tmp;
                 
-                tmp = msg.split("#");
-                
-                for(final Client i: listClient){
-                    if(i.username.equals(tmp[2])){
-                        i.ansList.add(tmp[1]);
+                    tmp = msg.split("#");
+
+                    for(final Client i: listClient){
+                        if(i.username.equals(tmp[2])){
+                            i.ansList.add(tmp[1]);
+                        }
+                    }
+
+                    gui.updateLog(tmp[2] + " menjawab " + tmp[1]+"\n");
+                    
+                    jawabFlag = 1;
+                    
+                    String message = "";
+                    
+                    message = "*CLEAR";
+                    
+                    try {
+                        pack = new DatagramPacket(message.getBytes(), message.length(), InetAddress.getByName(group), port);
+                    } catch (UnknownHostException ex) {
+                        Logger.getLogger(MulticastServer.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+
+                    try {
+                        s.send(pack,(byte) ttl);
+                    } catch (IOException ex) {
+                        Logger.getLogger(MulticastServer.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                    
+                    message = "Soal sudah terjawab";
+                    
+                    try {
+                        pack = new DatagramPacket(message.getBytes(), message.length(), InetAddress.getByName(group), port);
+                    } catch (UnknownHostException ex) {
+                        Logger.getLogger(MulticastServer.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+
+                    try {
+                        s.send(pack,(byte) ttl);
+                    } catch (IOException ex) {
+                        Logger.getLogger(MulticastServer.class.getName()).log(Level.SEVERE, null, ex);
                     }
                 }
+                else{
+                    continue;
+                }
                 
-                gui.updateLog(tmp[2] + " menjawab " + tmp[1]);
             }
             
             if(msg.startsWith("*CLOSE CLIENT")){
@@ -100,7 +139,6 @@ public class MulticastServer {
             }
         }while(true);
     }
-    
     
     public void sendMessage(String message){
             try {

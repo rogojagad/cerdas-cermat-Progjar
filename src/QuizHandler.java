@@ -32,7 +32,10 @@ public class QuizHandler extends Thread {
         
         int count = 1;
         serv.sendMessage("*CLEAR");
-        serv.sendMessage("Quiz akan segera dimulai, bersiap - siap dalam 5 detik");
+        serv.sendMessage("Quiz akan segera dimulai 5 detik"+
+                "\n\n1. Jawaban yang diterima hanyalah jawaban dari peserta yang paling cepat"+
+                "\n2. Score akhir adalah banyak soal yang dijawab dengan benar"
+                + "\n3. Jadilah yang tercepat dan sedikit cerdas");
         
         try {
             sleep(5000);
@@ -61,7 +64,7 @@ public class QuizHandler extends Thread {
                 z++;
             }
             
-            gui.updateLog("Soal ke "+count+" dikeluarkan\n\n");
+            gui.updateLog("Soal ke "+count+" dikeluarkan\n");
             count++;
             
             try {
@@ -69,6 +72,8 @@ public class QuizHandler extends Thread {
             } catch (InterruptedException ex) {
                 Logger.getLogger(QuizHandler.class.getName()).log(Level.SEVERE, null, ex);
             }
+            
+            serv.jawabFlag = 0;
         }
         
         serv.sendMessage("*CLEAR");
