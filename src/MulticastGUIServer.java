@@ -200,12 +200,6 @@ public class MulticastGUIServer extends javax.swing.JFrame {
     }
     
     public void appendUser(List<Client> userList){
-//        this.userList.setText("");
-//        
-//        for(final String i: userList){
-//            this.userList.append(i+"\n");
-//        }
-
           this.userList.setText("");
           
           for(final Client i: userList){
