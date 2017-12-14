@@ -68,7 +68,7 @@ public class QuizHandler extends Thread {
             count++;
             
             try {
-                sleep(5000);
+                sleep(8000);
             } catch (InterruptedException ex) {
                 Logger.getLogger(QuizHandler.class.getName()).log(Level.SEVERE, null, ex);
             }

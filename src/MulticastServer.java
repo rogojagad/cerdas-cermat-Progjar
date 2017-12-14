@@ -18,7 +18,7 @@ import java.util.logging.Logger;
 
 public class MulticastServer {
     private static int port = 5000;
-    private static String group = "224.0.0.3";
+    private static String group = "224.0.0.166";
     private static int ttl = 1;
     private static MulticastSocket s;
     private static DatagramPacket pack;
